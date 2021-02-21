@@ -1,5 +1,6 @@
 const Modal = {
   modalOverlay: document.querySelector(".modal-overlay"),
+  modalTitle: document.querySelector("#form h2"),
   editingIndex: -1,
 
   toggle(isEdit = false, index = -1) {
@@ -10,10 +11,13 @@ const Modal = {
       const data = Transaction.all[index];
 
       Modal.editingIndex = index;
+      Modal.modalTitle.innerHTML = "Editar transação";
 
       Form.description.value = data.description;
       Form.amount.value = data.amount / 100;
       Form.date.value = data.date.split("/").reverse().join("-");
+    } else {
+      Modal.modalTitle.innerHTML = "Nova transação";
     }
   },
 };
@@ -139,7 +143,7 @@ const DOM = {
   },
   clearTransactions() {
     DOM.transactionsContainer.innerHTML = "";
-  }
+  },
 };
 
 const Utils = {
