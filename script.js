@@ -58,8 +58,12 @@ const Transaction = {
         }
     },
     remove(index) {
-        Transaction.all.splice(index, 1)
-        App.reload()
+        const result = confirm('Você tem certeza que deseja deletar?')
+
+        if (result) {
+            Transaction.all.splice(index, 1)
+            App.reload()
+        }
     },
     incomes() {
         const allIncomes = Transaction.all.reduce((total, current) => {
@@ -205,14 +209,18 @@ const Form = {
 
             if (Modal.editingIndex !== -1) {
                 const data = Transaction.all[Modal.editingIndex]
-                data.description = transaction.description
-                data.amount = transaction.amount
-                data.date = transaction.date
+                const result = confirm(`Você está prestes a editar "${data.description}". Prosseguir?`)
 
-                Storage.set(Transaction.all)
-                DOM.clearTransactions()
-                Transaction.all.forEach(DOM.addTransaction)
-                DOM.updateBalance()
+                if (result) {
+                    data.description = transaction.description
+                    data.amount = transaction.amount
+                    data.date = transaction.date
+
+                    Storage.set(Transaction.all)
+                    DOM.clearTransactions()
+                    Transaction.all.forEach(DOM.addTransaction)
+                    DOM.updateBalance()
+                }
             } else {
                 Form.saveTransaction(transaction)
             }
