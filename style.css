@@ -202,6 +202,15 @@ td.expense {
     color: var(--red);
 }
 
+td.actions img {
+    margin-left: .8rem;
+    transition: all .2s ease-in-out;
+}
+
+td.actions img:hover {
+    transform: scale(1.1);
+}
+
 /* Modal */
 .modal-overlay {
     width: 100%;

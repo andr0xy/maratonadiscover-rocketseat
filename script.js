@@ -1,6 +1,20 @@
 const Modal = {
-    toggle() {
-        document.querySelector('.modal-overlay').classList.toggle('active')
+    modalOverlay: document.querySelector('.modal-overlay'),
+    editingIndex: -1,
+
+    toggle(isEdit = false, index = -1) {
+        Form.clearFields()
+        Modal.modalOverlay.classList.toggle('active')
+
+        if (isEdit && index !== -1) {
+            const data = Transaction.all[index]
+            
+            Modal.editingIndex = index
+
+            Form.description.value = data.description
+            Form.amount.value = data.amount / 100
+            Form.date.value = data.date.split('/').reverse().join('-')
+        }
     }
 }
 
@@ -35,6 +49,13 @@ const Transaction = {
     add(transaction) {
         Transaction.all.push(transaction)
         App.reload()
+    },
+    edit(index) {
+        if (Transaction.all[index]) {
+            Modal.toggle(true, index)
+        } else {
+            alert('Análise 🤔 | Um erro ocorreu.')
+        }
     },
     remove(index) {
         Transaction.all.splice(index, 1)
@@ -85,7 +106,8 @@ const DOM = {
         <td class="description">${description}</td>
         <td class=${CSSClass}>${Utils.formatCurrency(amount)}</td>
         <td class="date">${date}</td>
-        <td>
+        <td class="actions">
+            <img onclick="Transaction.edit(${index})" src="./assets/edit.png" alt="Editar transação">
             <img onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação">
         </td>
         `
@@ -171,6 +193,7 @@ const Form = {
         Form.description.value = ''
         Form.amount.value = ''
         Form.date.value = ''
+        Modal.editingIndex = -1
     },
     submit(event) {
         event.preventDefault()
@@ -180,7 +203,19 @@ const Form = {
 
             const transaction = Form.formatValues()
 
-            Form.saveTransaction(transaction)
+            if (Modal.editingIndex !== -1) {
+                const data = Transaction.all[Modal.editingIndex]
+                data.description = transaction.description
+                data.amount = transaction.amount
+                data.date = transaction.date
+
+                Storage.set(Transaction.all)
+                DOM.clearTransactions()
+                Transaction.all.forEach(DOM.addTransaction)
+                DOM.updateBalance()
+            } else {
+                Form.saveTransaction(transaction)
+            }
             Form.clearFields()
             Modal.toggle()
         } catch (err) {
