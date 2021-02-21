@@ -15,6 +15,7 @@
 body {
     background: #f0f2f5;
     font-family: 'Poppins', sans-serif;
+    transition: background 1.5s ease-in-out;
 }
 
 html {
@@ -121,6 +122,7 @@ header {
     border-radius: 0.25rem;
     margin-bottom: 2rem;
     color: var(--dark-blue);
+    transition: background 1.5s ease-in-out;
 }
 
 .card h3 {
@@ -170,6 +172,7 @@ table thead th {
     font-weight: normal;
     padding: 1rem 2rem;
     text-align: left;
+    transition: background 1.5s ease-in-out;
 }
 
 table tbody tr {
@@ -184,6 +187,7 @@ table tbody td {
     background: white;
     padding: 1rem 2rem;
     font-weight: normal;
+    transition: background 1.5s ease-in-out;
 }
 
 td.description {
@@ -279,4 +283,45 @@ footer {
         grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
     }
+}
+
+/* Darkmode */
+#darkmode-button {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 40px;
+    height: 40px;
+    padding: .3rem;
+    background-color: #141516;
+    box-shadow: 2.5px 2.5px 10px rgba(0, 0, 0, 0.5);
+    border-radius: .35rem;
+    cursor: pointer;
+    transition: background 1.5s ease-in-out;
+}
+
+body.darkmode {
+    background-color: #141516;
+}
+
+body.darkmode .card:not(.total) {
+    background-color: #1f1f1f;
+    color: #f0f0f0;
+}
+
+body.darkmode th {
+    color: #f0f0f0;
+    background-color: #1f1f1f;
+}
+
+body.darkmode td {
+    background-color: #1f1f1f;
+}
+
+body.darkmode td:first-child {
+    color: #f0f0f0;
+}
+
+body.darkmode #darkmode-button {
+    background-color: #f0f0f0;
 }

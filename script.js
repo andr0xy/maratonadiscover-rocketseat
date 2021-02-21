@@ -13,6 +13,23 @@ const Storage = {
     }
 }
 
+const Darkmode = {
+    body: document.body,
+
+    update() {
+        Darkmode.getState() === '1' ?
+            Darkmode.body.classList.add('darkmode') :
+            Darkmode.body.classList.remove('darkmode')
+    },
+    toggle() {
+        localStorage.setItem('dev.finances:darkmode', Darkmode.body.classList.contains('darkmode') ? '0' : '1')
+        Darkmode.update()
+    },
+    getState() {
+        return localStorage.getItem('dev.finances:darkmode') || '0'
+    }
+}
+
 const Transaction = {
     all: Storage.get(),
     add(transaction) {
@@ -177,6 +194,7 @@ const App = {
         Transaction.all.forEach(DOM.addTransaction)
         DOM.updateBalance()
         Storage.set(Transaction.all)
+        Darkmode.update()
     },
     reload() {
         DOM.clearTransactions()
