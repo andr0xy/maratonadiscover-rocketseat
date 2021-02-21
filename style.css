@@ -334,3 +334,24 @@ body.darkmode td:first-child {
 body.darkmode #darkmode-button {
   background-color: #f0f0f0;
 }
+
+body.darkmode .modal {
+  background-color: #1f1f1f;
+}
+
+body.darkmode #form h2 {
+  color: #f0f0f0;
+}
+
+body.darkmode #form input {
+  background-color: #141516;
+  color: #f0f0f0;
+}
+
+body.darkmode #form input:focus {
+  border: solid 1px var(--light-green);
+}
+
+body.darkmode #form .input-group small {
+  color: #f0f0f0;
+}
